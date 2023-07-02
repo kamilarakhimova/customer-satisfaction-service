@@ -14,6 +14,8 @@
 
 В папке `solution` располагаются тетрадки (Jupiter Notebook) с решением ML-части проекта. Более подробное описание можно найти в [readme](https://github.com/kamilarakhimova/customer-satisfaction-service/tree/main/solution/readme.md) этой папки.
 
+Папка `.streamlit` содержит в себе файл конфигурации темы, цветов и шрифтов: `config.toml`.
+
 В таблицах `airline_clients.csv` и `airline_clients_clean.csv` можно увидеть изначальный датасет и очищенный датасет (полученный после EDA).
 
 В файле `model.pickle` находится предобученная модель.
