@@ -61,7 +61,7 @@ def show_main_page():
 
 
 def write_user_data(df):
-    st.write("## Ваши данные: ")
+    st.write("## Показываем немного внутрянки. Это Ваши масштабированные данные: ")
     st.write(df)
 
 
@@ -119,15 +119,15 @@ def sidebar_input_features():
             st.balloons()
 
     data = {
-        "Gender_Male": gender == 'Мужской',
-        "Gender_Female": gender == 'Женский',
-        "Gender_Non-binary": gender == 'Небинарный',
+        "Gender_Male": int(gender == 'Мужской'),
+        "Gender_Female": int(gender == 'Женский'),
+        "Gender_Non-binary": int(gender == 'Небинарный'),
         "Age": (age - min_age) / (max_age - min_age),
-        "Customer Type": customer_type == 'да',
-        "Type of Travel": type_of_travel == "Персональная поездка",
-        "Class_Business": airplane_class == "Бизнес",
-        "Class_Eco": airplane_class == "Эконом",
-        "Class_Eco Plus": airplane_class == "Эконом Плюс",
+        "Customer Type": int(customer_type == 'да'),
+        "Type of Travel": int(type_of_travel == "Персональная поездка"),
+        "Class_Business": int(airplane_class == "Бизнес"),
+        "Class_Eco": int(airplane_class == "Эконом"),
+        "Class_Eco Plus": int(airplane_class == "Эконом Плюс"),
         "Flight Distance": (flight_distance - min_fd) / (max_fd - min_fd),
         "Departure Delay in Minutes": (departure_delay - min_delay) / (max_delay - min_delay),
         "Arrival Delay in Minutes": (arrival_delay - min_delay) / (max_delay - min_delay),
