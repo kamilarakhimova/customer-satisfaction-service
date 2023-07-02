@@ -16,7 +16,7 @@ def load_model_and_predict(df):
     with open('model.pickle', 'rb') as f:
         model = pickle.load(f)
 
-    prediction = model.predict(df)
+    prediction = model.predict(df)[0]
     prediction_prob = model.predict_proba(df)[0]
 
     encode_prediction_prob = {
