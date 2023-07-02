@@ -4,7 +4,7 @@
 
 Данный проект демонстрирует построение ML-модели, предсказывающей удовлетворённость пассажира авиакомпании полётом, и дальнейшее представление её в виде интерактивного веб-приложения с использованием фреймворка Streamlit.
 
-Воспользоваться приложением можно [здесь](https://airline-client-satisfaction.streamlit.app/)!
+Увидеть результат можно [здесь](https://airline-client-satisfaction.streamlit.app/)!
 
 <img width="1081" alt="Снимок экрана 2023-06-29 в 02 05 54" src="https://github.com/kamilarakhimova/customer-satisfaction-service/assets/58568615/2aebc8d2-6ba6-426c-bc7c-b39404fe604c">
 
