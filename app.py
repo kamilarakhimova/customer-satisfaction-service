@@ -87,8 +87,8 @@ def sidebar_input_features():
     gender = st.sidebar.selectbox("Пол", ("Мужской", "Женский", "Небинарный"))
     age = st.sidebar.slider("Возраст", min_value=min_age, max_value=max_age, value=35, step=1)
     customer_type = st.sidebar.radio('Лояльны ли Вы к авиакомпании?', ['да', 'нет'])
-    type_of_travel = st.sidebar.selectbox("Тип поездки", ("Персональная поездка", "Бизнес-поездка"))
-    airplane_class = st.sidebar.selectbox("Класс обслуживания в самолёте", ("Эконом", "Эконом Плюс", "Бизнес"))
+    type_of_travel = st.sidebar.selectbox("Тип поездки", ("Бизнес-поездка", "Персональная поездка"))
+    airplane_class = st.sidebar.selectbox("Класс обслуживания в самолёте", ("Бизнес", "Эконом", "Эконом Плюс"))
     flight_distance = st.sidebar.number_input("Введите дальность перелета (в милях)", min_value=min_fd, max_value=max_fd, value=2000)
     departure_delay = st.sidebar.number_input("Введите задержку отправления (в минутах)", min_value=min_delay, max_value=max_delay)
     arrival_delay = st.sidebar.number_input("Введите задержку прибытия (в минутах)", min_value=min_delay, max_value=max_delay)
@@ -109,8 +109,7 @@ def sidebar_input_features():
     cleanliness = st.sidebar.slider("Оцените чистоту на борту", min_value=1, max_value=5, key=13, value=3, step=1)
     personal_data = st.sidebar.checkbox('Согласие на обработку персональных данных')
 
-    if personal_data:
-        if st.sidebar.button('Готово'):
+    if st.sidebar.button('Готово'):
             st.balloons()
 
     data = {
