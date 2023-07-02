@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
-from PIL import Image
-#from model import open_data, preprocess_data, split_data, load_model_and_predict
+import pickle
 
 min_age = 6
 max_age = 122
@@ -11,6 +10,32 @@ min_delay = 0
 max_delay = 3000
 min_score = 1
 max_score = 5
+
+
+def load_model_and_predict(df):
+    with open('model.pickle', 'rb') as f:
+        model = pickle.load(f)
+
+    prediction = model.predict(df)[0]
+    prediction_prob = model.predict_proba(df)[0]
+
+    encode_prediction_prob = {
+        0: "Вы будете удовлетворены с вероятностью",
+        1: "Вы не будете удовлетворены с вероятностью"
+    }
+    encode_prediction = {
+        0: "Ура! Кажется, Вы довольны нашим сервиом.",
+        1: "Сожалеем, кажется, наш сервис Вас не устроил"
+    }
+
+    prediction_data = {}
+    for key, value in encode_prediction_prob.items():
+        prediction_data.update({value: prediction_prob[key]})
+
+    prediction_df = pd.DataFrame(prediction_data, index=[0])
+    prediction = encode_prediction[prediction]
+
+    return prediction, prediction_df
 
 
 def process_main_page():
@@ -52,16 +77,10 @@ def process_side_bar_inputs():
     st.sidebar.header('Заполните данные здесь, пожалуйста')
     user_input_df = sidebar_input_features()
 
-    # train_df = open_data()
-    #train_X_df, _ = split_data(train_df)
-    #full_X_df = pd.concat((user_input_df, train_X_df), axis=0)
-    #preprocessed_X_df = preprocess_data(full_X_df, test=False)
+    write_user_data(user_input_df)
 
-    #user_X_df = preprocessed_X_df[:1]
-    #write_user_data(user_X_df)
-
-    #prediction, prediction_probas = load_model_and_predict(user_X_df)
-    #write_prediction(prediction, prediction_probas)
+    prediction, prediction_probs = load_model_and_predict(user_input_df)
+    write_prediction(prediction, prediction_probs)
 
 
 def sidebar_input_features():
@@ -71,32 +90,33 @@ def sidebar_input_features():
     st.success('Success message')
 
     gender = st.sidebar.selectbox("Пол", ("Мужской", "Женский", "Небинарный"))
-    age = st.sidebar.slider("Возраст", min_value=min_age, max_value=max_age, step=1)
-    customer_type = st.sidebar.radio('Лояльны ли к авиакомпании?', ['да', 'нет'])
-    type_of_travel = st.sidebar.selectbox("Тип поездки", ("Бизнес-поездка", "Персональная/личная поездка"))
-    airplane_class = st.sidebar.selectbox("Класс обслуживания в самолёте", ("Бизнес", "Эконом", "Эконом Плюс"))
-    flight_distance = st.sidebar.number_input("Введите дальность перелета (в милях)", min_value=min_fd, max_value=max_fd)
+    age = st.sidebar.slider("Возраст", min_value=min_age, max_value=max_age, value=35, step=1)
+    customer_type = st.sidebar.radio('Лояльны ли Вы к авиакомпании?', ['да', 'нет'])
+    type_of_travel = st.sidebar.selectbox("Тип поездки", ("Персональная поездка", "Бизнес-поездка"))
+    airplane_class = st.sidebar.selectbox("Класс обслуживания в самолёте", ("Эконом", "Эконом Плюс", "Бизнес"))
+    flight_distance = st.sidebar.number_input("Введите дальность перелета (в милях)", min_value=min_fd, max_value=max_fd, value=2000)
     departure_delay = st.sidebar.number_input("Введите задержку отправления (в минутах)", min_value=min_delay, max_value=max_delay)
     arrival_delay = st.sidebar.number_input("Введите задержку прибытия (в минутах)", min_value=min_delay, max_value=max_delay)
 
-    time_convenient = st.sidebar.slider("Оцените удобство времени прилета и вылета", min_value=1, max_value=5, key=1, step=1)
-    online_booking = st.sidebar.slider("Оцените удобство онлайн-бронирования", min_value=1, max_value=5, key=2, step=1)
-    checking_service = st.sidebar.slider("Оцените регистрацию на рейс", min_value=1, max_value=5, key=3, step=1)
-    baggage_handling = st.sidebar.slider("Оцените обращение с багажом", min_value=1, max_value=5, key=4, step=1)
-    gate_location = st.sidebar.slider("Оцените удобство расположения выхода на посадку в аэропорту", min_value=1, max_value=5, key=5, step=1)
-    online_boarding = st.sidebar.slider("Оцените выбор места в самолете", min_value=1, max_value=5, key=6, step=1)
-    seat_comfort = st.sidebar.slider("Оцените удобство сиденья", min_value=1, max_value=5, key=7, step=1)
-    leg_service = st.sidebar.slider("Оцените место в ногах на борту", min_value=1, max_value=5, key=8, step=1)
-    food_drink = st.sidebar.slider("Оцените еду и напитки на борту", min_value=1, max_value=5, key=9, step=1)
-    inflight_service = st.sidebar.slider("Оцените обслуживание во время полета", min_value=1, max_value=5, key=14, step=1)
-    wifi_service = st.sidebar.slider("Оцените интернет во время полета", min_value=1, max_value=5, key=10, step=1)
-    entertainment = st.sidebar.slider("Оцените развлечения во время полета", min_value=1, max_value=5, key=11, step=1)
-    onboard_service = st.sidebar.slider("Оцените обслуживание на борту", min_value=1, max_value=5, key=12, step=1)
-    cleanliness = st.sidebar.slider("Оцените чистоту на борту", min_value=1, max_value=5, key=13, step=1)
+    time_convenient = st.sidebar.slider("Оцените удобство времени прилета и вылета", min_value=1, max_value=5, key=1, value=3, step=1)
+    online_booking = st.sidebar.slider("Оцените удобство онлайн-бронирования", min_value=1, max_value=5, key=2, value=3, step=1)
+    checking_service = st.sidebar.slider("Оцените регистрацию на рейс", min_value=1, max_value=5, key=3, value=3, step=1)
+    baggage_handling = st.sidebar.slider("Оцените обращение с багажом", min_value=1, max_value=5, key=4, value=3, step=1)
+    gate_location = st.sidebar.slider("Оцените удобство расположения выхода на посадку в аэропорту", min_value=1, max_value=5, key=5, value=3, step=1)
+    online_boarding = st.sidebar.slider("Оцените выбор места в самолете", min_value=1, max_value=5, key=6, value=3, step=1)
+    seat_comfort = st.sidebar.slider("Оцените удобство сиденья", min_value=1, max_value=5, key=7, value=3, step=1)
+    leg_service = st.sidebar.slider("Оцените место в ногах на борту", min_value=1, max_value=5, key=8, value=3, step=1)
+    food_drink = st.sidebar.slider("Оцените еду и напитки на борту", min_value=1, max_value=5, key=9, value=3, step=1)
+    inflight_service = st.sidebar.slider("Оцените обслуживание во время полета", min_value=1, max_value=5, key=14, value=3, step=1)
+    wifi_service = st.sidebar.slider("Оцените интернет во время полета", min_value=1, max_value=5, key=10, value=3, step=1)
+    entertainment = st.sidebar.slider("Оцените развлечения во время полета", min_value=1, max_value=5, key=11, value=3, step=1)
+    onboard_service = st.sidebar.slider("Оцените обслуживание на борту", min_value=1, max_value=5, key=12, value=3, step=1)
+    cleanliness = st.sidebar.slider("Оцените чистоту на борту", min_value=1, max_value=5, key=13, value=3, step=1)
     personal_data = st.sidebar.checkbox('Согласие на обработку персональных данных')
 
-    if personal_data and st.sidebar.button('Готово'):
-        st.balloons()
+    if personal_data:
+        if st.sidebar.button('Готово'):
+            st.balloons()
 
     data = {
         "Gender_Male": gender == 'Мужской',
@@ -104,7 +124,7 @@ def sidebar_input_features():
         "Gender_Non-binary": gender == 'Небинарный',
         "Age": (age - min_age) / (max_age - min_age),
         "Customer Type": customer_type == 'да',
-        "Type of Travel": type_of_travel == "Персональная/личная поездка",
+        "Type of Travel": type_of_travel == "Персональная поездка",
         "Class_Business": airplane_class == "Бизнес",
         "Class_Eco": airplane_class == "Эконом",
         "Class_Eco Plus": airplane_class == "Эконом Плюс",
@@ -115,7 +135,7 @@ def sidebar_input_features():
         "Departure/Arrival time convenient": (time_convenient - min_score) / (max_score - min_score),
         "Ease of Online booking": (online_booking - min_score) / (max_score - min_score),
         "Gate location": (gate_location - min_score) / (max_score - min_score),
-        "Food and drink": (food_drink- min_score) / (max_score - min_score),
+        "Food and drink": (food_drink - min_score) / (max_score - min_score),
         "Online boarding": (online_boarding - min_score) / (max_score - min_score),
         "Seat comfort": (seat_comfort - min_score) / (max_score - min_score),
         "Inflight entertainment": (entertainment - min_score) / (max_score - min_score),
