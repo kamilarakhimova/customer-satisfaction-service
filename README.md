@@ -49,6 +49,6 @@ $ streamlit run app.py
 
 <img width="501" alt="gif" src="https://github.com/kamilarakhimova/customer-satisfaction-service/blob/main/streamlit-app.gif">
 
-Напомню, если захотелось самим "потрогать" созданное приложение, то сделать это можно по [ссылке](https://airline-client-satisfaction.streamlit.app/)!.
+Напомню, если захотелось самим "потрогать" созданное приложение, то сделать это можно по [ссылке](https://airline-client-satisfaction.streamlit.app/).
 
 ## Конец!
