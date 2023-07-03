@@ -6,7 +6,7 @@
 
 Увидеть результат можно [здесь](https://airline-client-satisfaction.streamlit.app/)!
 
-[gif](https://gifyu.com/image/SQGzg)
+![gif](https://gifyu.com/image/SQGzg)
 
 ---
 
