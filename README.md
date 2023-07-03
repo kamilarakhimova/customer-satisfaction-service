@@ -6,7 +6,7 @@
 
 Увидеть результат можно [здесь](https://airline-client-satisfaction.streamlit.app/)!
 
-![gif](https://tenor.com/ru/view/plane-window-sky-travelling-clouds-flying-gif-13818405.gif)
+![gif](https://disk.yandex.ru/i/SFtnHb2xoOF73A.gif)
 
 ---
 
