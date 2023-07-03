@@ -43,6 +43,6 @@ $ streamlit run app.py
 
 ##  Как выглядит работающее приложение?
 
-<img width="601" alt="gif" src="https://github.com/kamilarakhimova/customer-satisfaction-service/blob/main/streamlit-app.gif">
+<img width="501" alt="gif" src="https://github.com/kamilarakhimova/customer-satisfaction-service/blob/main/streamlit-app.gif">
 
 Наслаждайтесь!
