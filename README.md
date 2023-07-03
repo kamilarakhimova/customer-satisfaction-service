@@ -51,4 +51,6 @@ $ streamlit run app.py
 
 Напомню, если захотелось самим "потрогать" созданное приложение, то сделать это можно по [ссылке](https://airline-client-satisfaction.streamlit.app/).
 
+---
+
 ## Конец!
