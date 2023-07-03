@@ -6,7 +6,7 @@
 
 Увидеть результат можно [здесь](https://airline-client-satisfaction.streamlit.app/)!
 
-![gif](https://github.com/kamilarakhimova/customer-satisfaction-service/blob/main/streamlit-app.gif)
+![gif](https://github.com/kamilarakhimova/customer-satisfaction-service/blob/main/streamlit-app.gif =400x250)
 
 ---
 
