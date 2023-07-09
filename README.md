@@ -56,7 +56,7 @@ $ docker build -t stf-service .
 $ docker run --rm -p '8501:8501' stf-service
 ```
 
-Готово! Перейдите по ссылке [http://localhost:8501/], чтобы воспользоваться приложением.
+Готово! Перейдите по ссылке [http://localhost:8501/](http://localhost:8501/), чтобы воспользоваться приложением.
 
 ---
 
