@@ -53,7 +53,7 @@ $ streamlit run app.py
 
 ```
 $ docker build -t stf-service .
-$ docker run -it --rm -p '8501:8501' stf-service
+$ docker run --rm -p '8501:8501' stf-service
 ```
 
 Готово! Перейдите по ссылке [http://localhost:8501/], чтобы воспользоваться приложением.
